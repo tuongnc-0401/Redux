@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import HobbyList from '../components/Home/HobbyList/index.jsx'
-import {addNewHobby} from '../actions/hobby.js'
+import {addNewHobby,setActiveHobby} from '../actions/hobby.js'
 HomePage.propTypes = {
     
 };
@@ -14,6 +14,7 @@ const randomId = () => {
 
 function HomePage(props) {
     const hobbyList = useSelector(state => state.hobby.list);
+    const activeId = useSelector(state => state.hobby.activeId); 
     const dispatch = useDispatch();
     console.log('Hobby list',hobbyList);
 
@@ -28,12 +29,16 @@ function HomePage(props) {
        dispatch(action);
     }
 
+    const handleHobbyClick = (hobby) => {
+        const action = setActiveHobby(hobby);
+        dispatch(action);
+    }
 
     return (
         <div>
             <h1>HOMEPAGE</h1>
             <button onClick={handleRandomList}>Random hobby</button>
-            <HobbyList hobbyList={hobbyList} ></HobbyList>
+            <HobbyList hobbyList={hobbyList} activeId={activeId} onHobbyClick= {handleHobbyClick} ></HobbyList>
         </div>
     );
 }
