@@ -10,33 +10,38 @@ import { Container } from 'reactstrap';
 MainPage.propTypes = {};
 
 function MainPage(props) {
-  const photos = useSelector(state => state.photos);
   const dispatch = useDispatch();
+  const photos = useSelector(state => state.photos);
   const history = useHistory();
-
-  const handlePhotoRemoveClick = (photo) => {
-      const photoId = photo.id;
-      const action =removePhoto(photoId);
-      dispatch(action);
-
-  }
+  // console.log('List of photos: ', photos);
 
   const handlePhotoEditClick = (photo) => {
-      const editPhotoUrl = `/photos/${photo.id}`
-      history.push(editPhotoUrl)
+    console.log('Edit: ', photo);
+    const editPhotoUrl = `/photos/${photo.id}`;
+    history.push(editPhotoUrl);
   }
+
+  const handlePhotoRemoveClick = (photo) => {
+    console.log('Remove: ', photo);
+    const removePhotoId = photo.id;
+    const action = removePhoto(removePhotoId);
+    dispatch(action);
+  }
+
   return (
     <div className="photo-main">
-      <Banner title="Your awesome photos 🎉" backgroundUrl={Images.PINK_BG} />
+      <Banner title="🎉 Your awesome photos 🎉" backgroundUrl={Images.PINK_BG} />
 
       <Container className="text-center">
-        <Link to="/photos/add">Add new photo</Link>
-        <PhotoList 
-        photoList={photos} 
-        onPhotoRemoveClick={handlePhotoRemoveClick}
-        onPhotoEditClick={handlePhotoEditClick}
+        <div className="py-5">
+          <Link to="/photos/add">Add new photo</Link>
+        </div>
+
+        <PhotoList
+          photoList={photos}
+          onPhotoEditClick={handlePhotoEditClick}
+          onPhotoRemoveClick={handlePhotoRemoveClick}
         />
-      
       </Container>
     </div>
   );
