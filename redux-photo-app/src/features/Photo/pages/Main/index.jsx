@@ -4,7 +4,7 @@ import PhotoList from 'features/Photo/components/PhotoList';
 import { removePhoto } from 'features/Photo/photoSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 MainPage.propTypes = {};
@@ -12,7 +12,7 @@ MainPage.propTypes = {};
 function MainPage(props) {
   const photos = useSelector(state => state.photos);
   const dispatch = useDispatch();
-
+  const history = useHistory();
 
   const handlePhotoRemoveClick = (photo) => {
       const photoId = photo.id;
@@ -21,8 +21,9 @@ function MainPage(props) {
 
   }
 
-  const handlePhotoEditClick = () => {
-      console.log("editttttttt");
+  const handlePhotoEditClick = (photo) => {
+      const editPhotoUrl = `/photos/${photo.id}`
+      history.push(editPhotoUrl)
   }
   return (
     <div className="photo-main">
